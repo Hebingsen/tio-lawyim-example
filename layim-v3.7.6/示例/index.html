@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>LayIM 3.x PC版本地演示</title>
+
+		<link rel="stylesheet" href="../dist/css/layui.css">
+		<style>
+			html {
+				background-color: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="../dist/layui.js"></script>
+		<script src="../dist/tiows.js"></script>
+		<script src="../dist/chat.js"></script>
+		<script src="../dist/handler.js"></script>
+		<script>
+			//获取url的参数值
+			var userId = tiows.getUserIdByUrl();
+			console.log("获取到用户ID="+userId);
+			// 初始化连接
+			tiows.initWs(userId);
+			layui.use('layim', function(layim) {
+				//基础配置
+				layim.config({
+					//初始化接口
+					init: {
+						url: 'http://127.0.0.1:8080/api/user/chat-init/'+userId
+					},
+					isAudio: true, //开启聊天工具栏音频
+					isVideo: true, //开启聊天工具栏视频
+					initSkin: '5.jpg', //1-5 设置初始背景
+					notice: true, //是否开启桌面消息提醒，默认false
+					msgbox: layui.cache.dir + 'css/modules/layim/html/msgbox.html', //消息盒子页面地址，若不开启，剔除该项即可
+					find: layui.cache.dir + 'css/modules/layim/html/find.html', //发现页面地址，若不开启，剔除该项即可
+					chatLog: layui.cache.dir + 'css/modules/layim/html/chatlog.html' //聊天记录页面地址，若不开启，剔除该项即可
+				});
+
+				//监听layim建立就绪
+				layim.on('ready', function(res) {
+					console.log(res.mine);
+				});
+
+				//监听发送消息
+				layim.on('sendMessage', function(data) {
+					var To = data.to;
+					console.log(eval(data));
+					tiows.send(data);
+				});
+
+				//监听聊天窗口的切换
+				layim.on('chatChange', function(res) {
+					var type = res.data.type;
+					console.log(res.data.id)
+					if(type === 'friend') {
+						//模拟标注好友状态
+						//layim.setChatStatus('<span style="color:#FF5722;">在线</span>');
+					} else if(type === 'group') {
+						//模拟系统消息
+						layim.getMessage({
+							system: true,
+							id: res.data.id,
+							type: "group",
+							content: '模拟群员' + (Math.random() * 100 | 0) + '加入群聊'
+						});
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

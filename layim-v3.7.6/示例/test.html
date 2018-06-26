@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--<script src="../dist/tiows.js"></script>
+<script src="../dist/DemoHandler.js"></script>
+<script src="../dist/demo.js"></script>-->
+<!--<script type="text/javascript">
+	// ws://118.25.40.163:8088
+	var socketUrl = "ws://127.0.0.1:9326?userId=1111";
+	var socket = new WebSocket(socketUrl);
+	if(socket) {
+		// 连接发生错误的回调方法
+		socket.onerror = function() {
+			console.log("连接失败,尝试重新连接!");
+			socket = new WebSocket(socketUrl);
+		};
+
+		// 连接成功建立的回调方法
+		socket.onopen = function(event) {
+			console.log("websocket连接成功!");
+		}
+
+		// 连接关闭的回调方法
+		socket.onclose = function() {
+			console.log("关闭连接！!");
+			socket.close();
+		}
+
+		// 接收到消息的回调方法
+		socket.onmessage = function(event) {
+			console.log("收到消息啦:" + event.data);
+			//		var obj = eval("(" + event.data + ")");
+			//		obj.timestamp = parseInt(obj.timestamp);
+			//		window.layim.getMessage(obj);
+			//		dchat.addFriend(obj);
+		}
+	}
+</script>-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<h1>websocket连接测试</h1>
+	</body>
+
+</html>
